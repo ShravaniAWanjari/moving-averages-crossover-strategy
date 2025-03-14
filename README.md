@@ -63,8 +63,8 @@ jupyter notebook code.ipynb
 
 Based on the cumulative returns graph, the Exponential Moving Average (EMA) strategy outperformed the Simple Moving Average (SMA) strategy.
 
-- **Total Return SMA**: 282.27%
-- **Total Return EMA**: 287.61%
+- Total Return SMA: **282.27%**
+- Total Return EMA: **287.61%**
 
 <img src="images/returns_comparison.png" alt="Returns Comparison" width="600"/>
 
