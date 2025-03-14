@@ -2,17 +2,17 @@
 
 ## Overview
 
-This project implements the Moving Average Crossover strategy for algorithmic trading. The strategy utilizes short-term and long-term moving averages to generate buy and sell signals for a given financial instrument.
+This project implements the Moving Average Crossover strategy for algorithmic trading. The strategy utilizes short-term and long-term moving averages to generate buy and sell signals for a given asset.
 
 ## Features
 
 - Implements Simple Moving Averages (SMA) and Exponential Moving Averages (EMA) for trading signals
 - Visualization of moving averages and trade signals
-- Performance evaluation using key metrics
+- Performance evaluation using cummulative returns for EMA and SMA
 
 ## Dataset
 
-The strategy is tested on historical market data of Microsoft (MSFT) using <a src='https://yfinance-python.org/'>**yfinance**</a>.
+The strategy is tested on historical market data of Microsoft (MSFT) using **yfinance**.
 
 ## Installation
 
