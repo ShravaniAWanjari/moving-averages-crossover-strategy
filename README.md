@@ -42,7 +42,7 @@ jupyter notebook code.ipynb
 3. **Buy Signal**: When the short-term SMA crosses above the long-term SMA
 4. **Sell Signal**: When the short-term SMA crosses below the long-term SMA
 
-## Results & Visualization
+## Outcomes & Visual Insights
 
 ### Close Price Graph
 <img src="images/Close%20Price%20graph.png" alt="Close Price Graph" width="600"/>
@@ -59,7 +59,13 @@ jupyter notebook code.ipynb
 ### Exponential Moving Average (EMA) Signals
 <img src="images/EMA_signals.png" alt="EMA Signals" width="600"/>
 
-### Returns Comparison
+## Returns and Final Results
+
+Based on the cumulative returns graph, the Exponential Moving Average (EMA) strategy outperformed the Simple Moving Average (SMA) strategy.
+
+- **Total Return SMA**: 282.27%
+- **Total Return EMA**: 287.61%
+
 <img src="images/returns_comparison.png" alt="Returns Comparison" width="600"/>
 
 ## Future Improvements
