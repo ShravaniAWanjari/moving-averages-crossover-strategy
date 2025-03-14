@@ -61,7 +61,7 @@ jupyter notebook code.ipynb
 
 ## Returns and Final Results
 
-Based on the cumulative returns graph, the Exponential Moving Average (EMA) strategy outperformed the Simple Moving Average (SMA) strategy.
+Based on the cumulative returns graph, EMA performed better than SMA.
 
 - Total Return SMA: **282.27%**
 - Total Return EMA: **287.61%**
@@ -70,15 +70,12 @@ Based on the cumulative returns graph, the Exponential Moving Average (EMA) stra
 
 ## Future Improvements
 
-- Implementing more sophisticated trading strategies
+- Backtesting
+- Building a streamlit application to include user intput asset tickers, that way anyone can use it to get quick insights on the asset's performance
+- Going further on incorporating trading methodologies
 - Adding risk management features
-- Backtesting with different timeframes
-- Enhancing performance evaluation
+- Training an ML model for the same objective and drawing a comparison.
 
 ## Contributing
 
 Contributions are welcome! Feel free to fork the repo, create a branch, and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.
