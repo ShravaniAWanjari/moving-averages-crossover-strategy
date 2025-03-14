@@ -7,13 +7,12 @@ This project implements the Moving Average Crossover strategy for algorithmic tr
 ## Features
 
 - Implements Simple Moving Averages (SMA) and Exponential Moving Averages (EMA) for trading signals
-- Backtesting on historical data
 - Visualization of moving averages and trade signals
 - Performance evaluation using key metrics
 
 ## Dataset
 
-The strategy is tested on historical market data provided in `Data.csv`.
+The strategy is tested on historical market data of Microsoft (MSFT) using <a src='https://yfinance-python.org/'>**yfinance**</a>.
 
 ## Installation
 
