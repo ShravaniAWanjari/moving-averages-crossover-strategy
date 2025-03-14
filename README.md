@@ -45,19 +45,19 @@ jupyter notebook code.ipynb
 ## Outcomes & Visual Insights
 
 ### Close Price Graph
-<img src="images/Close%20Price%20graph.png" alt="Close Price Graph" width="600"/>
+<img src="images/Close%20Price%20graph.png" alt="Close Price Graph" width="400"/>
 
 ### SMA 50 vs SMA 200
-<img src="images/SMA50_SM200.png" alt="SMA 50 vs SMA 200" width="600"/>
+<img src="images/SMA50_SM200.png" alt="SMA 50 vs SMA 200" width="400"/>
 
 ### Simple Moving Average (SMA) Signals
-<img src="images/SMA_signals.png" alt="SMA Signals" width="600"/>
+<img src="images/SMA_signals.png" alt="SMA Signals" width="400"/>
 
 ### EMA 50 vs EMA 200
-<img src="images/EMA50_EMA200.png" alt="EMA 50 vs EMA 200" width="600"/>
+<img src="images/EMA50_EMA200.png" alt="EMA 50 vs EMA 200" width="400"/>
 
 ### Exponential Moving Average (EMA) Signals
-<img src="images/EMA_signals.png" alt="EMA Signals" width="600"/>
+<img src="images/EMA_signals.png" alt="EMA Signals" width="400"/>
 
 ## Returns and Final Results
 
