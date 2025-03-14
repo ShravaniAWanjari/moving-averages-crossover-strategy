@@ -45,22 +45,22 @@ jupyter notebook code.ipynb
 ## Results & Visualization
 
 ### Close Price Graph
-![Close Price Graph](images/Close%20Price%20graph.png)
-
-### Simple Moving Average (SMA) Signals
-![SMA Signals](images/SMA_signals.png)
+<img src="images/Close%20Price%20graph.png" alt="Close Price Graph" width="600"/>
 
 ### SMA 50 vs SMA 200
-![SMA 50 vs SMA 200](images/SMA50_SM200.png)
+<img src="images/SMA50_SM200.png" alt="SMA 50 vs SMA 200" width="600"/>
 
-### Exponential Moving Average (EMA) Signals
-![EMA Signals](images/EMA_signals.png)
+### Simple Moving Average (SMA) Signals
+<img src="images/SMA_signals.png" alt="SMA Signals" width="600"/>
 
 ### EMA 50 vs EMA 200
-![EMA 50 vs EMA 200](images/EMA50_EMA200.png)
+<img src="images/EMA50_EMA200.png" alt="EMA 50 vs EMA 200" width="600"/>
+
+### Exponential Moving Average (EMA) Signals
+<img src="images/EMA_signals.png" alt="EMA Signals" width="600"/>
 
 ### Returns Comparison
-![Returns Comparison](images/returns_comparison.png)
+<img src="images/returns_comparison.png" alt="Returns Comparison" width="600"/>
 
 ## Future Improvements
 
