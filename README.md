@@ -14,7 +14,7 @@ This project implements the Moving Average Crossover strategy for algorithmic tr
 
 - Implements Simple Moving Averages (SMA) and Exponential Moving Averages (EMA) for trading signals
 - Visualization of moving averages and trade signals
-- Performance evaluation using cummulative returns for EMA and SMA
+- Performance evaluation using cumulative returns for EMA and SMA
 
 ## Dataset
 
