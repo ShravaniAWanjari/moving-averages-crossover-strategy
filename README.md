@@ -75,7 +75,6 @@ Based on the cumulative returns graph, EMA performed better than SMA.
 
 ## Future Improvements
 
-- Backtesting
 - Building a streamlit application to include user intput asset tickers, that way anyone can use it to get quick insights on the asset's performance
 - Going further on incorporating trading methodologies
 - Adding risk management features
