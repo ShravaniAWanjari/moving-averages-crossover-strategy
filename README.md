@@ -4,6 +4,12 @@
 
 This project implements the Moving Average Crossover strategy for algorithmic trading. The strategy utilizes short-term and long-term moving averages to generate buy and sell signals for a given asset.
 
+## Golden Cross Strategy
+
+##### The Golden Cross occurs when a shorter moving average crosses above a longer one, signaling a bullish trend:
+- SMA Golden Cross: When the SMA50 crosses above the SMA200, it indicates a potential long entry.
+- EMA Golden Cross: The same concept applies to EMAs, which provide quicker signals due to their responsiveness to recent price action.
+
 ## Features
 
 - Implements Simple Moving Averages (SMA) and Exponential Moving Averages (EMA) for trading signals
