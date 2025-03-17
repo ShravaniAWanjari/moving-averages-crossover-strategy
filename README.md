@@ -24,7 +24,7 @@ The strategy is tested on historical market data of Microsoft (MSFT) using **yfi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/moving-average-crossover.git
+   git clone https://github.com/ShravaniAWanjari/moving-average-crossover.git
    cd moving-average-crossover
    ```
 2. Install dependencies:
