@@ -1,87 +1,94 @@
 import streamlit as st
+import numpy as np
 import pandas as pd
-import yfinance as yf
-import datetime
 import matplotlib.pyplot as plt
+import yfinance as yf
 from datetime import datetime, timedelta
 
-
-st.title("Analyze Moving Average Crossover Strategy")
-
-ticker = st.text_input("Enter Ticker Symbol", "APPL").upper()
-
-if not ticker.isalpha():
-    st.error("Invalid ticker symbol. Please enter a valid stock ticker.")
-    st.markdown("<a href='https://stockanalysis.com/stocks/'>Oops</a>!", unsafe_allow_html=True)
-    st.stop()
+st.title("EMA Crossover Strategy")
 
 yesterday = datetime.now() - timedelta(days=1)
-start_date = st.date_input("Select Start Date:", datetime(2023, 1, 1).date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
-end_date = st.date_input("Select End Date:", datetime(2024, 1, 1).date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
 
-if end_date < start_date:
-    st.error("Error: End date cannot be earlier than start date. Please select a valid date range.")
-else:
-    st.success(f"Analyzing {ticker}")
+ticker = st.text_input("Enter Ticker Symbol:", "AAPL")
+start_date = st.date_input("Select Start Date:", datetime(2020, 1, 1).date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
+end_date = st.date_input("Select End Date:", yesterday.date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
 
+if st.button("Apply Strategy"):
+    data = yf.download(ticker, start=start_date, end=end_date)
 
-df = yf.download(ticker, start=start_date, end=end_date)
+    data['EMA50'] = data['Close'].ewm(span=50, adjust=False).mean()
+    data['EMA200'] = data['Close'].ewm(span=200, adjust=False).mean()
 
-df['SMA_50'] = df['Close'].rolling(window=50).mean()
-df['SMA_200'] = df['Close'].rolling(window=200).mean()
-df['EMA_50'] = df['Close'].ewm(span=50).mean()
-df['EMA_200'] = df['Close'].ewm(span=200).mean()
+    data['SMA50'] = data['Close'].rolling(window=50).mean()
+    data['SMA200'] = data['Close'].rolling(window=200).mean()
 
+    data['Signal_EMA'] = 0  
+    data['Signal_EMA'] = np.where(data['EMA50'] > data['EMA200'], 1, 0) 
 
-def plot_sma_crossover():
-    fig, ax = plt.subplots()
-    ax.plot(df.index, df['Close'], label='Close Price', alpha=0.7)
-    ax.plot(df.index, df['SMA_50'], label='SMA 50', linestyle='dashed')
-    ax.plot(df.index, df['SMA_200'], label='SMA 200', linestyle='dashed')
-    ax.set_title("SMA Crossover Strategy")
+    data['Signal_SMA'] = 0  
+    data['Signal_SMA'] = np.where(data['SMA50'] > data['SMA200'], 1, 0) 
+
+    data['Position_EMA'] = data['Signal_EMA'].diff()
+    data['Position_SMA'] = data['Signal_SMA'].diff()
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.plot(data['Close'], label='Close', color='lightblue', alpha=0.5)
+    ax.plot(data['EMA200'], label='200-day EMA', color='green')
+    ax.plot(data['EMA50'], label='50-day EMA', color='red')
+
+    ax.plot(data[data['Position_EMA'] == 1].index, data['Close'][data['Position_EMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
+    ax.plot(data[data['Position_EMA'] == -1].index, data['Close'][data['Position_EMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
+
+    ax.set_title('EMA Crossover Strategy', fontsize=16)
+    ax.set_xlabel('Date', fontsize=12)
+    ax.set_ylabel('Close', fontsize=12)
     ax.legend()
+    ax.grid()
     st.pyplot(fig)
 
-def plot_ema_crossover():
-    fig, ax = plt.subplots()
-    ax.plot(df.index, df['Close'], label='Close Price', alpha=0.7)
-    ax.plot(df.index, df['EMA_50'], label='EMA 50', linestyle='dashed')
-    ax.plot(df.index, df['EMA_200'], label='EMA 200', linestyle='dashed')
-    ax.set_title("EMA Crossover Strategy")
+        # Plotting SMA Crossover
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.plot(data['Close'], label='Close', color='lightblue', alpha=0.5)
+    ax.plot(data['SMA200'], label='200-day SMA', color='green')
+    ax.plot(data['SMA50'], label='50-day SMA', color='red')
+
+    # Plot buy signals for SMA
+    ax.plot(data[data['Position_SMA'] == 1].index, data['Close'][data['Position_SMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
+    # Plot sell signals for SMA
+    ax.plot(data[data['Position_SMA'] == -1].index, data['Close'][data['Position_SMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
+
+    # Add labels and title for SMA
+    ax.set_title('SMA Crossover Strategy', fontsize=16)
+    ax.set_xlabel('Date', fontsize=12)
+    ax.set_ylabel('Close', fontsize=12)
     ax.legend()
+    ax.grid()
     st.pyplot(fig)
 
-df['Daily Returns'] = df['Close'].pct_change()
-df['Cumulative Returns'] = (1 + df['Daily Returns']).cumprod()
+    st.divider()
 
-def plot_cumulative_returns():
-    fig, ax = plt.subplots()
-    ax.plot(df.index, df['Cumulative Returns'], label='Cumulative Returns', color='green')
-    ax.set_title("Cumulative Returns")
+
+    data['Daily_Return'] = data['Close'].pct_change()
+
+    data['Strategy_Return_SMA'] = data['Daily_Return'] * data['Signal_SMA'].shift(1)
+    data['Strategy_Return_EMA'] = data['Daily_Return'] * data['Signal_EMA'].shift(1)
+
+    data['Cumulative_Return_SMA'] = (1 + data['Strategy_Return_SMA']).cumprod()
+    data['Cumulative_Return_EMA'] = (1 + data['Strategy_Return_EMA']).cumprod()
+
+    total_return_sma = data['Cumulative_Return_SMA'].iloc[-1] - 1
+    total_return_ema = data['Cumulative_Return_EMA'].iloc[-1] - 1
+    
+    st.subheader("Returns:")
+    st.write(f"**EMA:** {total_return_ema:.2%}")
+    st.write(f"**SMA:** {total_return_sma:.2%}")
+    # Comparison Plot
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.plot(data['Cumulative_Return_SMA'], label='Returns-SMA', color='red', alpha=0.8)
+    ax.plot(data['Cumulative_Return_EMA'], label='Returns-EMA', color='green', alpha=0.8)
+
+    ax.set_title('Backtesting EMA and SMA', fontsize=16)
+    ax.set_xlabel('Date', fontsize=12)
+    ax.set_ylabel('Close', fontsize=12)
     ax.legend()
+    ax.grid()
     st.pyplot(fig)
-
-df['Signal'] = 0
-df['Signal'][df['SMA_50'] > df['SMA_200']] = 1  # Buy signal
-df['Signal'][df['SMA_50'] < df['SMA_200']] = -1  # Sell signal
-
-df['Buy'] = (df['Signal'] == 1) & (df['Signal'].shift(1) == 0)
-df['Sell'] = (df['Signal'] == -1) & (df['Signal'].shift(1) == 0)
-
-fig, ax = plt.subplots()
-ax.plot(df.index, df['Close'], label='Close Price', alpha=0.7)
-ax.plot(df.index, df['SMA_50'], label='SMA 50', linestyle='dashed')
-ax.plot(df.index, df['SMA_200'], label='SMA 200', linestyle='dashed')
-ax.set_title("SMA Crossover Strategy")
-ax.legend()
-####need to fix the position logic here
-ax.plot(df[df['Buy'].index], df['Close'][df['Buy']], '^', markersize=10, color='g', label='Buy', alpha=1)
-
-ax.plot(df[df['Sell'].index], df['Close'][df['Sell']], 'v', markersize=10, color='r', label='Sell', alpha=1)
-
-st.pyplot(fig)
-
-plot_sma_crossover()
-plot_ema_crossover()
-plot_cumulative_returns()
-
