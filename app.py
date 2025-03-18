@@ -5,15 +5,26 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from datetime import datetime, timedelta
 
-st.title("Moving Averages Crossover Strategy")
+st.title("Apply Moving Average Crossover Strategy")
+ 
+ticker = st.text_input("Enter Ticker Symbol", "MSFT").upper()
+ 
+if not ticker.isalpha():
+     st.error("Invalid ticker symbol. Please enter a valid stock ticker.")
+     st.markdown("<a href='https://stockanalysis.com/stocks/'>Oops</a>!", unsafe_allow_html=True)
+     st.stop()
 
 yesterday = datetime.now() - timedelta(days=1)
-
-ticker = st.text_input("Enter Ticker Symbol:", "AAPL")
-start_date = st.date_input("Select Start Date:", datetime(2020, 1, 1).date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
-end_date = st.date_input("Select End Date:", yesterday.date(), min_value=datetime(1986, 3, 13).date(), max_value=yesterday.date())
+start_date = st.date_input("Select Start Date: (first stock record date: 12th March 1986)", datetime(2013, 1, 1).date(), min_value=datetime(1986, 3, 12).date(), max_value=yesterday.date())
+end_date = st.date_input("Select End Date:", yesterday.date(), min_value=datetime(1986, 3, 12).date(), max_value=yesterday.date())
 
 if st.button("Apply Strategy"):
+
+    if not ticker.isalpha():
+     st.error("Invalid ticker symbol. Please enter a valid stock ticker.")
+     st.markdown("<a href='https://stockanalysis.com/stocks/'>Oops</a>!", unsafe_allow_html=True)
+     st.stop()
+
     data = yf.download(ticker, start=start_date, end=end_date)
 
     data['EMA50'] = data['Close'].ewm(span=50, adjust=False).mean()
@@ -93,3 +104,8 @@ if st.button("Apply Strategy"):
     ax.legend()
     ax.grid()
     st.pyplot(fig)
+    results_table = data[data['Position_EMA'].isin([1, -1])][['Close', 'Position_EMA']].copy()
+    results_table['Position_EMA'] = results_table['Position_EMA'].replace({1: 'Buy', -1: 'Sell'})
+
+    st.subheader("Trade Signals Table")
+    st.dataframe(results_table, use_container_width=True)
