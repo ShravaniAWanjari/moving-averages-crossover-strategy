@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from datetime import datetime, timedelta
 
-st.title("EMA Crossover Strategy")
+st.title("Moving Averages Crossover Strategy")
 
 yesterday = datetime.now() - timedelta(days=1)
 
