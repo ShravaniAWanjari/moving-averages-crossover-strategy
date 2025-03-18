@@ -21,6 +21,7 @@ if st.button("Apply Strategy"):
 
     data['SMA50'] = data['Close'].rolling(window=50).mean()
     data['SMA200'] = data['Close'].rolling(window=200).mean()
+    
 
     data['Signal_EMA'] = 0  
     data['Signal_EMA'] = np.where(data['EMA50'] > data['EMA200'], 1, 0) 
@@ -35,8 +36,8 @@ if st.button("Apply Strategy"):
     ax.plot(data['EMA200'], label='200-day EMA', color='green')
     ax.plot(data['EMA50'], label='50-day EMA', color='red')
 
-    ax.plot(data[data['Position_EMA'] == 1].index, data['Close'][data['Position_EMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
-    ax.plot(data[data['Position_EMA'] == -1].index, data['Close'][data['Position_EMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
+    ax.plot(data[data['Position_EMA'] == 1].index, data['EMA50'][data['Position_EMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
+    ax.plot(data[data['Position_EMA'] == -1].index, data['EMA50'][data['Position_EMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
 
     ax.set_title('EMA Crossover Strategy', fontsize=16)
     ax.set_xlabel('Date', fontsize=12)
@@ -52,9 +53,9 @@ if st.button("Apply Strategy"):
     ax.plot(data['SMA50'], label='50-day SMA', color='red')
 
     # Plot buy signals for SMA
-    ax.plot(data[data['Position_SMA'] == 1].index, data['Close'][data['Position_SMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
+    ax.plot(data[data['Position_SMA'] == 1].index, data['SMA50'][data['Position_SMA'] == 1], '^', markersize=10, color='g', label='Buy', alpha=1)
     # Plot sell signals for SMA
-    ax.plot(data[data['Position_SMA'] == -1].index, data['Close'][data['Position_SMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
+    ax.plot(data[data['Position_SMA'] == -1].index, data['SMA50'][data['Position_SMA'] == -1], 'v', markersize=10, color='r', label='Sell', alpha=1)
 
     # Add labels and title for SMA
     ax.set_title('SMA Crossover Strategy', fontsize=16)
