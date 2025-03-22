@@ -5,6 +5,14 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 from datetime import datetime, timedelta
 
+
+def is_valid_ticker(ticker):
+    try:
+        test_data = yf.Ticker(ticker).history(period="1d")
+        return not test_data.empty
+    except Exception:
+        return False
+
 st.title("Apply Moving Average Crossover Strategy")
 
 ticker = st.text_input("Enter Ticker Symbol", "MSFT").upper()
